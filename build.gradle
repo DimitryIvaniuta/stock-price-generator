@@ -1,0 +1,96 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.2'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.flywaydb.flyway' version '11.3.0'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.maven.apache.org/maven2' }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    // Annotation Processor
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    implementation 'com.auth0:java-jwt:4.5.0'
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    // Spring Boot Starter Web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Spring Boot Data JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // Spring OAuth2 Client & Resource Server
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    // PostgreSQL Driver
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // Flyway Database Migration Tool
+    implementation 'org.flywaydb:flyway-core:11.3.0'
+    implementation 'org.flywaydb:flyway-database-postgresql:11.3.0'
+
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // Jackson for JSON Serialization/Deserialization
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
+
+    implementation 'jakarta.validation:jakarta.validation-api:3.1.1'
+
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.2.Final'
+
+    // Lombok
+    compileOnly("org.projectlombok:lombok:1.18.36")
+    annotationProcessor("org.projectlombok:lombok:1.18.36")
+
+    // Lombok for tests
+    testCompileOnly("org.projectlombok:lombok:1.18.36")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.36")
+
+    // JUnit 5 API
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+
+    // JUnit 5 Engine
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
+
+    testImplementation 'org.mockito:mockito-core:5.15.2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+
+    // In-memory database for testing
+    testImplementation 'com.h2database:h2'
+}
+
+tasks.withType(Test).configureEach {
+    jvmArgs += [
+            '-XX:+EnableDynamicAgentLoading'
+    ]
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,38 @@
+server:
+  port: 5002
+
+spring:
+  application:
+    name: stock-price-generator
+  datasource:
+    url: jdbc:postgresql://localhost:5432/stockdatabase
+    username: stockuser
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        batch_fetch_style: padded
+        default_batch_fetch_size: 50
+        enable_lazy_load_no_trans: true
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    open-in-view: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      retries: 3
+      acks: all
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    topic:
+      name: stock-price-topic
+stock:
+  scheduler:
+    fixed-rate: 5000  # Interval in milliseconds (e.g., 5000ms = 5 seconds)
