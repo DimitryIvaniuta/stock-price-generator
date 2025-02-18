@@ -1,5 +1,6 @@
 package com.stockgenerator;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -32,6 +33,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2025-02-17
  */
 @SpringBootApplication
+@Slf4j
 public class StockPriceGeneratorApplication {
 
     /**
@@ -41,6 +43,6 @@ public class StockPriceGeneratorApplication {
      */
     public static void main(String[] args) {
         SpringApplication.run(StockPriceGeneratorApplication.class, args);
-        System.out.println("🚀 Stock Price Generator Application is running...");
+        log.info("Stock Price Generator Application is running...");
     }
 }

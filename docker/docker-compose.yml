@@ -35,8 +35,8 @@ services:
 
       # Required for KRaft Mode
       KAFKA_KRAFT_MODE: "true"
-      KAFKA_CLUSTER_ID: "kraft-cluster-01"  # Added Cluster ID
-      CLUSTER_ID: "kraft-cluster"
+      KAFKA_CLUSTER_ID: q1Rf3z4cQF-6H8zNyC0VWw
+      CLUSTER_ID: q1Rf3z4cQF-6H8zNyC0VWw
 
       # Replication & Topics Settings
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
