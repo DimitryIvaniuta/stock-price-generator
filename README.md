@@ -70,3 +70,9 @@ stock-price-generator/
         │               └── StockPriceSchedulerTest.java               // Tests for scheduled generation
         └── resources/
             └── application-test.yml                                 // Test configuration (H2 in-memory database)
+
+---
+
+## 📬 Contact
+
+**Dzmitry Ivaniuta** — [diafter@gmail.com](mailto:diafter@gmail.com) — [GitHub](https://github.com/DimitryIvaniuta)
