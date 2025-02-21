@@ -75,4 +75,4 @@ stock-price-generator/
 
 ## 📬 Contact
 
-**Dzmitry Ivaniuta** — [diafter@gmail.com](mailto:diafter@gmail.com) — [GitHub](https://github.com/DimitryIvaniuta)
+**Dzmitry Ivaniuta** — [diafter@gmail.com] — [GitHub: https://github.com/DimitryIvaniuta]
