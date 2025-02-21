@@ -1,33 +1,40 @@
 # Stock Price Generator Microservice
 
-This project is a hybrid microservice built with Spring Boot, Kafka (using KRaft mode), and PostgreSQL. It demonstrates how to generate, update, and publish stock price updates in real time while persisting the data for historical analysis.
+## Overview
 
-## Table of Contents
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Project Structure](#project-structure)
-- [Configuration](#configuration)
-- [Running the Project](#running-the-project)
-- [API Endpoints](#api-endpoints)
-- [Testing](#testing)
-- [Docker Compose](#docker-compose)
-- [License](#license)
+The Stock Price Generator Microservice is a comprehensive Spring Boot application designed to simulate real-time stock price updates. This microservice demonstrates a hybrid approach by combining event streaming with persistent storage. Stock prices are generated automatically at scheduled intervals and are both stored in a PostgreSQL database and published to a Kafka topic (running in KRaft mode). This architecture enables real-time processing as well as historical data analysis.
 
 ## Features
-- **Real-time Updates:** Publish stock price updates to a Kafka topic.
-- **Database Persistence:** Store and update stock prices in PostgreSQL.
-- **REST API:** Expose endpoints to publish and retrieve stock prices.
-- **Scheduled Generation:** Automatically generate stock price updates at regular intervals.
-- **Dockerized Environment:** Run Kafka (in KRaft mode) and PostgreSQL via Docker Compose.
+
+- **Real-Time Stock Price Updates:**  
+  Automatically generates and publishes simulated stock prices at regular intervals.
+
+- **Hybrid Data Management:**  
+  Persists stock prices in PostgreSQL for historical analysis while simultaneously streaming updates to Kafka for real-time processing.
+
+- **Scheduled Price Generation:**  
+  Utilizes Spring's scheduling capabilities to trigger stock price updates at a configurable interval.
+
+- **RESTful Integration:**  
+  Provides REST endpoints (e.g., for manual triggering or data retrieval) to interact with the service.
+
+- **In-Memory Testing Support:**  
+  Includes test configuration that leverages an H2 in-memory database for fast and isolated integration tests.
+
+- **Containerized Environment:**  
+  Designed to work with Docker (using Docker Compose) to easily run required services like Kafka (in KRaft mode) and PostgreSQL locally.
 
 ## Prerequisites
-- Java 17 or later
-- Gradle (or use the Gradle Wrapper)
-- Docker Desktop (for Windows, macOS, or Linux)
-- Internet connection (to pull Docker images)
+
+- **Java 17** (or later)
+- **Gradle** (or the provided Gradle wrapper)
+- **Docker Desktop** (to run the PostgreSQL and Kafka containers)
+- Basic knowledge of Spring Boot, Kafka, and PostgreSQL is helpful
 
 ## Project Structure
-```stock-price-generator/
+
+```plaintext
+stock-price-generator/
 ├── docker-compose.yml
 ├── README.md
 ├── build.gradle
@@ -36,58 +43,30 @@ This project is a hybrid microservice built with Spring Boot, Kafka (using KRaft
 │   │   ├── java/
 │   │   │   └── com/
 │   │   │       └── stockpricegenerator/
-│   │   │           ├── StockPriceGeneratorApplication.java
+│   │   │           ├── StockPriceGeneratorApplication.java         // Main application class
 │   │   │           ├── controller/
-│   │   │           │   └── StockPriceController.java
+│   │   │           │   └── StockPriceController.java                // REST API controller for manual interactions
 │   │   │           ├── model/
-│   │   │           │   └── StockPrice.java
+│   │   │           │   └── StockPrice.java                          // JPA entity for stock prices
 │   │   │           ├── repository/
-│   │   │           │   └── StockPriceRepository.java
+│   │   │           │   └── StockPriceRepository.java                // Spring Data repository for stock prices
 │   │   │           ├── service/
-│   │   │           │   └── StockPriceService.java
+│   │   │           │   └── StockPriceService.java                   // Business logic for saving, updating, and publishing prices
 │   │   │           └── scheduler/
-│   │   │               └── StockPriceScheduler.java
+│   │   │               └── StockPriceScheduler.java                 // Scheduled job for generating prices automatically
 │   │   └── resources/
-│   │       └── application.yml
+│   │       └── application.yml                                      // Application configuration (database, Kafka, etc.)
 └── src/
     └── test/
         ├── java/
         │   └── com/
         │       └── stockpricegenerator/
-        │           ├── StockPriceGeneratorApplicationTests.java
+        │           ├── StockPriceGeneratorApplicationTests.java     // Basic context load tests
         │           ├── controller/
-        │           │   └── StockPriceControllerTest.java
+        │           │   └── StockPriceControllerTest.java              // Tests for REST endpoints
         │           ├── service/
-        │           │   └── StockPriceServiceTest.java
+        │           │   └── StockPriceServiceTest.java                 // Unit tests for service layer
         │           └── scheduler/
-        │               └── StockPriceSchedulerTest.java
+        │               └── StockPriceSchedulerTest.java               // Tests for scheduled generation
         └── resources/
-            └── application-test.yml
-
-```
-
-
-## Configuration
-### Application Configuration (`application.yml`)
-```yaml
-server:
-  port: 8080
-
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/stockdb
-    username: stockuser
-    password: stockpass
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-
-  kafka:
-    bootstrap-servers: localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+            └── application-test.yml                                 // Test configuration (H2 in-memory database)
