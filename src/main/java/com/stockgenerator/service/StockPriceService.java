@@ -114,8 +114,9 @@ public class StockPriceService {
      *
      * @param symbol The stock symbol (e.g., "AAPL", "GOOG").
      * @param price The latest stock price to be updated.
+     * @return StockPrice value
      */
-    public void updateStockPriceAndPublish(String symbol, double price) {
+    public StockPrice updateStockPriceAndPublish(String symbol, double price) {
         Optional<StockPrice> stockPriceOptional = stockPriceRepository.findBySymbol(symbol);
 
         StockPrice stockPrice;
@@ -134,7 +135,7 @@ public class StockPriceService {
         stockPriceRepository.save(stockPrice);
 
         // Publish the stock price update to Kafka
-        updateStockPrice(stockPrice);
+        return updateStockPrice(stockPrice);
     }
 
     /**

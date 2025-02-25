@@ -1,4 +1,4 @@
-package com.stock.generator.scheduler;
+package com.stockgenerator.scheduler;
 
 import com.stockgenerator.StockPriceGeneratorApplication;
 import com.stockgenerator.service.StockPriceScheduler;

@@ -49,13 +49,12 @@ dependencies {
 
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'jakarta.validation:jakarta.validation-api:3.1.1'
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.2.Final'
 
     // Jackson for JSON Serialization/Deserialization
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
-
-    implementation 'jakarta.validation:jakarta.validation-api:3.1.1'
-
-    implementation 'org.hibernate.validator:hibernate-validator:8.0.2.Final'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.0'
 
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.36")

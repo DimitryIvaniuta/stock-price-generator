@@ -1,9 +1,7 @@
 package com.stockgenerator.controller;
 
 import com.stockgenerator.model.StockPrice;
-import com.stockgenerator.producer.StockPriceProducer;
 import com.stockgenerator.service.StockPriceService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -64,15 +62,15 @@ public class StockPriceController {
      * and sends it to the configured Kafka topic.
      * </p>
      *
-     * @param stockPrice the stock price to publish
+     * @param stock the stock price to publish
      * @return a {@link ResponseEntity} indicating the result of the operation
      */
     @PostMapping("/publish")
-    public ResponseEntity<String> publishStockPrice(@RequestBody StockPrice stockPrice) {
+    public ResponseEntity<String> publishStockPrice(@RequestBody final StockPrice stock) {
         try {
-            stockPriceService.publishStockPrice(stockPrice);
+            stockPriceService.publishStockPrice(stock);
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body("Stock price published successfully: " + stockPrice);
+                    .body("Stock price published successfully");
         } catch (KafkaException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to publish stock price due to Kafka error: " + e.getMessage());
@@ -80,6 +78,19 @@ public class StockPriceController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An error occurred while publishing stock price: " + e.getMessage());
         }
+    }
+
+    /**
+     * Retrieves a stock price by its symbol.
+     *
+     * @param sml the stock symbol (e.g., "AAPL")
+     * @return a ResponseEntity containing the StockPrice if found, or a 404 Not Found status otherwise.
+     */
+    @GetMapping("/symbol/{sml}")
+    public ResponseEntity<StockPrice> getStockPriceBySymbol(@PathVariable String sml) {
+        return stockPriceService.getStockPriceBySymbol(sml)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 }

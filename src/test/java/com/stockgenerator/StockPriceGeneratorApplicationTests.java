@@ -1,4 +1,4 @@
-package com.stock.generator;
+package com.stockgenerator;
 
 public class StockPriceGeneratorApplicationTests {
 
